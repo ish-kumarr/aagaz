@@ -3,9 +3,23 @@ import { MapPin, Calendar, Clock } from 'lucide-react';
 import VenueCarousel from '@/components/VenueCarousel';
 
 export default function VenueSection() {
+  const eventDate = new Date('2026-01-17T16:00:00'); // Assuming 17th January 2026, 4 PM
+
+  const formattedDate = new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(eventDate);
+
+  const formattedTime = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  }).format(eventDate) + " Onwards";
+
   const venueDetails = [
-    { icon: <Calendar className="w-4 h-4" />, label: "Date", value: "17th January 2026" },
-    { icon: <Clock className="w-4 h-4" />, label: "Time", value: "4 PM Onwards" },
+    { icon: <Calendar className="w-4 h-4" />, label: "Date", value: formattedDate },
+    { icon: <Clock className="w-4 h-4" />, label: "Time", value: formattedTime },
     { icon: <MapPin className="w-4 h-4" />, label: "Location", value: "Jim Corbett, India" },
   ];
 

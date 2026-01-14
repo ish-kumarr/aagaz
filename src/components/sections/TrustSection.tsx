@@ -2,8 +2,14 @@ import { motion } from 'framer-motion';
 import InfiniteMarquee from '@/components/InfiniteMarquee';
 import TrustCard from '@/components/TrustCard';
 import { Shield, TrendingUp, Globe, Users } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile'; // Import useIsMobile
 
 export default function TrustSection() {
+  const isMobile = useIsMobile(); // Get mobile status
+
+  // Define speeds based on device
+  const marqueeSpeed1 = isMobile ? 30 : 50; // Faster for mobile
+  const marqueeSpeed2 = isMobile ? 35 : 55; // Faster for mobile
   const trustPoints = [
     {
       icon: <TrendingUp className="w-5 h-5" />,
@@ -50,7 +56,7 @@ export default function TrustSection() {
 
       {/* Top Marquee */}
       <div className="mb-20">
-        <InfiniteMarquee items={marqueeItems} direction="left" speed={50} />
+        <InfiniteMarquee items={marqueeItems} direction="left" speed={marqueeSpeed1} />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -90,7 +96,7 @@ export default function TrustSection() {
 
       {/* Bottom Marquee */}
       <div className="mt-20">
-        <InfiniteMarquee items={marqueeItems} direction="right" speed={55} />
+        <InfiniteMarquee items={marqueeItems} direction="right" speed={marqueeSpeed2} />
       </div>
     </section>
   );

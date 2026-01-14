@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { User, Briefcase, Target, ChevronRight, ChevronLeft, Check, PartyPopper } from 'lucide-react';
+import { User, Briefcase, Target, ChevronRight, ChevronLeft, Check, PartyPopper, Loader2 } from 'lucide-react'; // Import Loader2 for spinner
 import AagazLogo from '@/components/AagazLogo';
 import { Link } from 'react-router-dom';
 import BrandingCarousel from '@/components/BrandingCarousel';
@@ -13,13 +13,14 @@ import BrandingCarousel from '@/components/BrandingCarousel';
 interface FormData {
   name: string;
   contact: string;
+  email: string; // Added email field
   state: string;
   visitorType: 'ib' | 'visitor' | '';
   interest: 'trading' | 'fixed_returns' | '';
 }
 
 const steps = [
-    { id: 1, title: 'Personal Details', icon: User, fields: ['name', 'contact', 'state'] },
+    { id: 1, title: 'Personal Details', icon: User, fields: ['name', 'contact', 'email', 'state'] }, // Added email field
     { id: 2, title: 'Your Role', icon: Briefcase, fields: ['visitorType'] },
     { id: 3, title: 'Your Interest', icon: Target, fields: ['interest'] },
 ];
@@ -28,10 +29,12 @@ const steps = [
 export default function RegisterPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for loading
   const [direction, setDirection] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     contact: '',
+    email: '', // Initialize email
     state: '',
     visitorType: '',
     interest: '',
@@ -53,6 +56,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true); // Set loading to true
     try {
       const response = await fetch('https://aagaz-submission.vercel.app/api/submit-form', {
         method: 'POST',
@@ -73,13 +77,16 @@ export default function RegisterPage() {
     } catch (error) {
       console.error('An error occurred:', error);
       // You can show a toast notification here
+    } finally {
+      setIsSubmitting(false); // Set loading to false
     }
   };
 
   const resetForm = () => {
     setCurrentStep(1);
     setIsSubmitted(false);
-    setFormData({ name: '', contact: '', state: '', visitorType: '', interest: '' });
+    setIsSubmitting(false); // Reset loading state
+    setFormData({ name: '', contact: '', email: '', state: '', visitorType: '', interest: '' });
   };
 
   const isStepValid = useMemo(() => {
@@ -132,8 +139,9 @@ export default function RegisterPage() {
                       Next <ChevronRight size={16} className="ml-2" />
                     </Button>
                   ) : (
-                    <Button variant="gold" type="submit" disabled={!isStepValid}>
-                      Submit Registration
+                    <Button variant="gold" type="submit" disabled={!isStepValid || isSubmitting}>
+                      {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      {isSubmitting ? 'Submitting...' : 'Submit Registration'}
                     </Button>
                   )}
                 </div>
@@ -190,6 +198,7 @@ const Step1 = ({ formData, setFormData }: { formData: FormData, setFormData: (da
   <div className="space-y-4">
     <LabelledInput id="name" label="Full Name" placeholder="e.g. Sumit Singh" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
     <LabelledInput id="contact" type="tel" label="Contact Number" placeholder="10 Digit Phone number" value={formData.contact} onChange={e => setFormData({ ...formData, contact: e.target.value })} />
+    <LabelledInput id="email" type="email" label="Email Address" placeholder="e.g. your@example.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
     <LabelledInput id="state" label="State" placeholder="e.g. Haryana" value={formData.state} onChange={e => setFormData({ ...formData, state: e.target.value })} />
   </div>
 );
