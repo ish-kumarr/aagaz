@@ -80,11 +80,11 @@ export default function BrandingCarousel() {
             alt={slides[currentIndex].alt}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-10 flex flex-col justify-end h-full p-8 md:p-12 text-white">
+      <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-12 text-white"> {/* Adjusted padding */}
         <AnimatePresence mode="out-in">
           <motion.div
             key={currentIndex}
@@ -93,10 +93,10 @@ export default function BrandingCarousel() {
             animate="center"
             exit="exit"
           >
-            <p className="text-gold text-sm font-semibold tracking-widest uppercase mb-3">
+            <p className="text-gold text-sm font-semibold tracking-widest uppercase mb-2"> {/* Adjusted margin-bottom */}
               {slides[currentIndex].subtitle}
             </p>
-            <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+            <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold mb-3 leading-tight"> {/* Adjusted text size */}
               {slides[currentIndex].title}
             </h3>
             <p className="text-white/80 max-w-md text-base font-light">
@@ -106,7 +106,7 @@ export default function BrandingCarousel() {
         </AnimatePresence>
       </div>
 
-      <div className="absolute bottom-8 right-8 z-10 flex gap-2.5">
+      <div className="absolute bottom-6 right-6 z-10 flex gap-2.5"> {/* Adjusted bottom/right */}
         {slides.map((_, index) => (
           <button
             key={index}

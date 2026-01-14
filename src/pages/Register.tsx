@@ -243,7 +243,7 @@ const SuccessMessage = ({ resetForm }: { resetForm: () => void }) => (
     <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gold/10 flex items-center justify-center"><PartyPopper className="w-10 h-10 text-gold" /></div>
     <h3 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-3">Registration Confirmed!</h3>
     <p className="font-sans text-base text-muted-foreground mb-8 max-w-sm">
-      Thank you for joining the AAGAZ movement. A confirmation has been sent to you. We look forward to seeing you.
+      Thank you for joining the AAGAZ movement. Your ID cards would be shared shortly. We look forward to seeing you.
     </p>
     <Link to="/">
         <Button variant="outline" onClick={resetForm} className="font-sans border-gold/30 hover:bg-gold/5">Back to Home</Button>

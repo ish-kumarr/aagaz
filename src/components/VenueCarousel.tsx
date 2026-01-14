@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import banyanRetreat1 from '@/assets/banyan-retreat-1.jpg';
 import banyanRetreat2 from '@/assets/banyan-retreat-2.jpg';
 import banyanRetreat3 from '@/assets/banyan-retreat-3.jpg';
+import { useIsMobile } from '@/hooks/use-mobile'; // Import useIsMobile hook
 
 const images = [
   { src: banyanRetreat1, alt: 'Luxury cottages at The Banyan Retreat', caption: 'Private Forest Cottages', subtitle: 'Nestled in nature' },
@@ -14,6 +15,7 @@ const images = [
 export default function VenueCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const isMobile = useIsMobile(); // Use the hook to detect mobile
 
   const nextSlide = useCallback(() => {
     setDirection(1);
@@ -105,7 +107,7 @@ export default function VenueCarousel() {
               <p className="label-premium text-gold mb-2">
                 {images[currentIndex].subtitle}
               </p>
-              <h3 className="font-serif text-2xl md:text-4xl text-foreground mb-3">
+              <h3 className="font-serif text-xl md:text-4xl text-foreground mb-3"> {/* Adjusted font size for mobile */}
                 {images[currentIndex].caption}
               </h3>
               <motion.div 
@@ -118,17 +120,17 @@ export default function VenueCarousel() {
           </AnimatePresence>
         </div>
 
-        {/* Navigation arrows - minimal style */}
+        {/* Navigation arrows - always visible on mobile, hidden on hover for desktop */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full border border-foreground/20 flex items-center justify-center text-foreground/60 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-gold hover:text-gold hover:scale-110 backdrop-blur-sm"
+          className={`absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full border border-foreground/20 flex items-center justify-center text-foreground/60 transition-all duration-500 hover:border-gold hover:text-gold hover:scale-110 backdrop-blur-sm ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} // Conditional opacity
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full border border-foreground/20 flex items-center justify-center text-foreground/60 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-gold hover:text-gold hover:scale-110 backdrop-blur-sm"
+          className={`absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full border border-foreground/20 flex items-center justify-center text-foreground/60 transition-all duration-500 hover:border-gold hover:text-gold hover:scale-110 backdrop-blur-sm ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} // Conditional opacity
           aria-label="Next slide"
         >
           <ChevronRight className="w-5 h-5" />

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import ScrollIndicator from '@/components/ScrollIndicator';
 import LogoImage from '@/components/LogoImage';
+import RegistrationCountdown from '@/components/RegistrationCountdown'; // Import RegistrationCountdown
 import heroVideo from '@/assets/hero-bg-video.mp4';
 import { Link } from 'react-router-dom';
 
@@ -85,6 +86,10 @@ export default function HeroSection({ onRegisterClick }: HeroSectionProps) {
             <p className="text-xs text-muted-foreground/50 tracking-wider">
               Limited seats available
             </p>
+            {/* Registration Countdown */}
+            <div className="mt-6">
+              <RegistrationCountdown />
+            </div>
           </motion.div>
         </motion.div>
       </div>
